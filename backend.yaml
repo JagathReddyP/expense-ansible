@@ -42,9 +42,9 @@
 
   - name: extract the code
     ansible.builtin.unarchive:
-      src: /tmp/backend.zip # By default ansible thinks this path in ansible server, so include remote_src: yes
-      dest: /app
-      remote_src: yes
+     src: /tmp/backend.zip # By default ansible thinks this path in ansible server, so include remote_src: yes
+     dest: /app
+     remote_src: yes
 
   - name: install dependencies
     ansible.builtin.command: npm install
@@ -53,23 +53,23 @@
 
   - name: Copy backend service 
     ansible.builtin.copy:
-      src: backend.service
-      dest: /etc/systemd/system/backend.service 
+     src: backend.service
+     dest: /etc/systemd/system/backend.service 
 
   - name: import mysql data
     community.builtin.mysql.mysql_db:
-      login_user: root
-      login_password: "{{ mysql_root_password }}"
-      login_host: "{{ login_host }}"
-      target: /app/schema/backend.sql 
-      name: all
-      state: import
+     login_user: root
+     login_password: "{{ mysql_root_password }}"
+     login_host: "{{ login_host }}"
+     target: /app/schema/backend.sql 
+     name: all
+     state: import
       
   - name: daemon reload
     ansible.builtin.systemd_service:
-      daemon_reload: true
-      state: restarted
-      name: backend
+     daemon_reload: true
+     state: restarted
+     name: backend
     
 
      
